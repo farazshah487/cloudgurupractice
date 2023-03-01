@@ -1,0 +1,205 @@
+<div class="absolute inset-0 flex flex-col min-w-0 overflow-hidden">
+
+    <div class="flex flex-col sm:flex-row flex-0 sm:items-center sm:justify-between p-6 pb-22 sm:pt-12 sm:pb-28 sm:px-10 bg-default dark:bg-transparent">
+        <div class="flex-1 min-w-0">
+            <div>
+                <div class="flex">
+                    <a
+                        class="inline-flex items-center -ml-1.5 text-secondary font-medium"
+                        [routerLink]="'/all-membership'">
+                        <mat-icon
+                            class="icon-size-5 text-secondary"
+                            [svgIcon]="'heroicons_solid:chevron-left'"></mat-icon>
+                        <span class="ml-1">Back</span>
+                    </a>
+                </div>
+            </div>
+            <div class="mt-2">
+                <h2 class="text-3xl md:text-4xl font-extrabold tracking-tight leading-7 sm:leading-10 truncate">
+                    Emergency Contact Detail
+                </h2>
+            </div>
+        </div>
+            <!-- Actions -->
+            <div class="flex shrink-0 items-center mt-6 sm:mt-0 sm:ml-4">
+                <button class="px-8" mat-raised-button color="primary"  aria-label="EditCount" type="button" *ngIf="updateBtn === true" (click)="clickEdit()">Edit</button>
+            </div>
+    </div>
+    <!--  -->
+    <div *ngIf="updateBtn === true"  class="flex-auto -mt-16 p-6 sm:p-10 rounded-t-2xl shadow overflow-y-auto bg-card" cdkScrollable>
+
+        <div>
+
+            <div class="grid sm:grid-cols-12 gap-6 w-full mt-8">
+
+                <div class="sm:col-span-3">
+                    <mat-label class="font-bold">Id</mat-label>
+                    <h2>{{emergencyRecord.Name}}</h2>
+                </div>
+                <div class="sm:col-span-3">
+                    <mat-label class="font-bold">Parent</mat-label>
+                    <!-- <h2>{{userRecord.Name}}</h2> -->
+                    <h2>{{userRecord.lstParents[0].Name}}</h2>
+                </div>
+
+                <div class="sm:col-span-3">
+                    <mat-label class="font-bold">Contact Person Name</mat-label>
+                    <h2>{{emergencyRecord.contactName__c}}</h2>
+                </div>
+
+                <div class="sm:col-span-3">
+                    <mat-label class="font-bold">Allow To Pick Children</mat-label>
+                    <h2 *ngIf="emergencyRecord.canPickChild__c === true">Allowed</h2>
+                    <h2 *ngIf="emergencyRecord.canPickChild__c === false">Not Allowed</h2>
+                </div>
+
+
+
+            </div>
+
+            <div class="grid sm:grid-cols-12 gap-6 w-full mt-8">
+
+                <div class="sm:col-span-3" *ngIf="emergencyRecord.Physical_Address__c">
+                    <mat-label class="font-bold">Address</mat-label>
+                    <h2>{{emergencyRecord.Physical_Address__c}}</h2>
+                </div>
+
+                <div class="sm:col-span-3" *ngIf="emergencyRecord.Town_City__c">
+                    <mat-label class="font-bold">City</mat-label>
+                    <h2>{{emergencyRecord.Town_City__c}}</h2>
+                </div>
+
+                <div class="sm:col-span-3" *ngIf="emergencyRecord.Postal_Code__c">
+                    <mat-label class="font-bold">Postal Code</mat-label>
+                    <h2>{{emergencyRecord.Postal_Code__c}}</h2>
+                </div>
+
+            </div>
+
+            <div class="grid sm:grid-cols-12 gap-6 w-full mt-8">
+
+                <div class="sm:col-span-3" *ngIf="emergencyRecord.Cell_Phone__c">
+                    <mat-label class="font-bold">Secondary Phone</mat-label>
+                    <h2>{{emergencyRecord.Cell_Phone__c}}</h2>
+                </div>
+
+                <div class="sm:col-span-3" *ngIf="emergencyRecord.Work_Phone__c">
+                    <mat-label class="font-bold">Work Phone</mat-label>
+                    <h2>{{emergencyRecord.Work_Phone__c}}</h2>
+                </div>
+
+                <div class="sm:col-span-3" *ngIf="emergencyRecord.Home_Phone__c">
+                    <mat-label class="font-bold">Primary Phone</mat-label>
+                    <h2>{{emergencyRecord.Home_Phone__c}}</h2>
+                </div>
+
+            </div>
+
+        </div>
+
+        <div class="loaderMain" *ngIf="pageLoader === true">
+            <div>
+                <img src="assets/images/loader/Loder.gif"  class="LoaderImage">
+                <p class="loaderText">{{pageLoaderText}}</p>
+            </div>
+        </div>
+
+    </div>
+
+
+
+
+
+        <!-- Main -->
+        <div *ngIf="updateBtn === false"  class="flex-auto -mt-16 p-6 sm:p-10 rounded-t-2xl shadow overflow-y-auto bg-card" cdkScrollable>
+
+            <form class="p-4 bg-card shadow rounded overflow-hidden" [formGroup]="profileForm" #emergencyContactNgForm="ngForm" (ngSubmit)="onFormSubmit()">
+
+                <div class="mainDiv">
+                    <mat-form-field class="flex-auto gt-xs:pr-3 px-1 w-full">
+                        <mat-label>Contact Person Name</mat-label>
+                        <input matInput [formControlName]="'id'"   readonly>
+                        <!-- <mat-error > Please enter Contact Person Name</mat-error> -->
+                    </mat-form-field>
+
+                    <mat-form-field class="flex-auto px-1 w-full">
+                        <mat-label>Parent</mat-label>
+                    <input matInput [formControlName]="'parentName'"  readonly>
+                    <!-- <mat-error > Please enter Address</mat-error> -->
+                </mat-form-field>
+            </div>
+
+            <div class="mainDiv">
+                    <mat-form-field class="flex-auto gt-xs:pr-3 px-1 w-full">
+                        <mat-label>Contact Person Name</mat-label>
+                        <input matInput [formControlName]="'contactName'" [placeholder]="'Contact Person Name'" required>
+                        <mat-error > Please enter Contact Person Name</mat-error>
+                    </mat-form-field>
+
+                    <mat-form-field class="flex-auto px-1 w-full">
+                        <mat-label>Address</mat-label>
+                    <input matInput [formControlName]="'physicalAddress'" [placeholder]="'Physical Address'" required>
+                    <mat-error > Please enter Address</mat-error>
+                </mat-form-field>
+            </div>
+
+
+            <div class="mainDiv">
+                <mat-form-field class="flex-auto items">
+                    <mat-label>City</mat-label>
+                    <input matInput [formControlName]="'city'" [placeholder]="'Town/City'" required>
+                    <mat-error > Please enter Town/City</mat-error>
+                </mat-form-field>
+
+                <mat-form-field class="flex-auto items">
+                    <mat-label>Postal Code</mat-label>
+                    <input matInput [formControlName]="'postalCode'" [placeholder]="'Postal Code'" required>
+                    <mat-error > Please enter Postal Code</mat-error>
+                </mat-form-field>
+
+            </div>
+
+            <div class="mainDiv">
+
+                <mat-form-field class="flex-auto items">
+                    <mat-label>Primary Phone</mat-label>
+                    <input matInput [formControlName]="'homePhone'" mask="(999) 999-9999" maxlength="14" [placeholder]="'Primary Phone'" required>
+                    <mat-error > Please enter Primary phone</mat-error>
+                </mat-form-field>
+
+                <mat-form-field class="flex-auto items">
+                    <mat-label>Secondary Phone</mat-label>
+                    <input matInput [formControlName]="'cellPhone'" [placeholder]="'Secondary Phone'">
+                </mat-form-field>
+            </div>
+
+            <div class="mainDiv">
+
+                <mat-form-field class="flex-auto items">
+                    <mat-label>Work Phone</mat-label>
+                    <input matInput [formControlName]="'workPhone'" [placeholder]="'Work Phone'">
+                </mat-form-field>
+            </div>
+
+            <div class="mainDiv">
+                <mat-checkbox [color]="'primary'" [formControlName]="'canPickChild'" class="font-medium"> Allow To Pick Children </mat-checkbox>
+            </div>
+
+
+            <div class="text-center mt-8">
+                <!-- <button class="px-8" mat-raised-button color="primary"  aria-label="EditCount" type="button" *ngIf="updateBtn === true" (click)="clickEdit()">Edit</button> -->
+                <button class="px-8 ml-4 submit-button" mat-raised-button color="primary"  [disabled]="emergencyContactNgForm.invalid" *ngIf="updateBtn === false" aria-label="EditCount">Update</button>
+            </div>
+
+            </form>
+
+            <div class="loaderMain" *ngIf="pageLoader === true">
+                <div>
+                    <img src="assets/images/loader/Loder.gif"  class="LoaderImage">
+                    <p class="loaderText">{{pageLoaderText}}</p>
+                </div>
+            </div>
+        </div>
+
+
+</div>
