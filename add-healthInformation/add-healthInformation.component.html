@@ -1,0 +1,97 @@
+<div class="flex flex-col flex-auto min-w-0">
+	<!-- Header -->
+	<div class="flex flex-col sm:flex-row flex-0 sm:items-center sm:justify-between p-6 sm:py-8 sm:px-10 border-b bg-card dark:bg-transparent">
+		<div class="flex-1 min-w-0">
+            <!-- Breadcrumbs -->
+            <div>
+                <div class="flex ">
+                    <a
+                        class="inline-flex items-center -ml-1.5 text-secondary font-medium"
+                        [routerLink]="'/all-membership'">
+                        <mat-icon
+                            class="icon-size-5 text-secondary"
+                            [svgIcon]="'heroicons_solid:chevron-left'"></mat-icon>
+                        <span class="ml-1">Back</span>
+                    </a>
+                </div>
+            </div>
+            <!-- Title -->
+            <div class="mt-2">
+                <h2 class="text-3xl md:text-4xl font-extrabold tracking-tight leading-7 sm:leading-10 truncate">
+                    Add Health Information
+                </h2>
+            </div>
+        </div>
+	</div>
+	<!-- Main -->
+	<div class="flex-auto p-6 sm:p-10">
+		<div class="">
+
+			<form class="p-4 bg-card shadow rounded overflow-hidden" [formGroup]="addChildrenHealthForm" #addChildrenHealthNgForm="ngForm" (ngSubmit)="onFormSubmit()">
+
+                <div class="flex flex-col gt-xs:flex-row">
+                    <div class="mainDiv">
+                        <mat-form-field class="flex-auto gt-xs:pr-3 items">
+                            <mat-label>Health Card</mat-label>
+                            <input [placeholder]="'Health Card Number'" id="healthCard" matInput [formControlName]="'healthCard'">
+                            <mat-error > Please enter Health Card</mat-error>
+                        </mat-form-field>
+
+                        <mat-form-field class="flex-auto gt-xs:pr-3 items">
+                            <mat-label>Immunizations Up To Date</mat-label>
+                            <mat-select [formControlName]="'immunizations'" [placeholder]="'Immunizations'">
+                                <mat-option value="Yes">Yes</mat-option>
+                                <mat-option value="No">No</mat-option>
+                            </mat-select>
+                            <mat-error > Please select immunizations</mat-error>
+                        </mat-form-field>
+
+                    </div>
+
+                    <div class="mainDiv">
+
+                        <mat-form-field class="flex-auto gt-xs:pr-3 items">
+                            <mat-label>Allergies</mat-label>
+                            <input [placeholder]="'Allergies'" matInput [formControlName]="'allergies'">
+                            <mat-error > Please enter Allergies</mat-error>
+                        </mat-form-field>
+
+                        <mat-form-field class="flex-auto gt-xs:pr-3 items">
+                            <mat-label>Diagnosed Disability or Illness </mat-label>
+                            <input [placeholder]="'Diagnosed Disability or Illness'" id="disability" matInput [formControlName]="'disability'">
+                            <mat-error > Please enter Diagnosed Disability or Illness </mat-error>
+                        </mat-form-field>
+
+                    </div>
+                    <div class="mainDiv">
+                        <mat-form-field class="flex-auto gt-xs:pr-3 items">
+                            <mat-label>Medication</mat-label>
+                            <input [placeholder]="'Medication'"  id="Medication" matInput [formControlName]="'medication'">
+                            <mat-error > Please enter Medication</mat-error>
+                        </mat-form-field>
+
+                        <mat-form-field class="flex-auto gt-xs:pr-3 items">
+                            <mat-label>Any Other Concerns</mat-label>
+                            <input [placeholder]="'Concerns'"  id="anyOtherConcerns" matInput [formControlName]="'anyOtherConcerns'">
+                            <mat-error > Please enter Any Other Concerns</mat-error>
+                        </mat-form-field>
+                    </div>
+
+                </div>
+
+
+            <div class="text-center mt-8">
+                <button class="px-8 ml-2 mr-2" mat-raised-button color="primary" class="submit-button" aria-label="EditCount" >Submit</button>
+            </div>
+
+			</form>
+		</div>
+	</div>
+
+    <div class="loaderMain" *ngIf="pageLoader === true">
+        <div>
+            <img src="assets/images/loader/Loder.gif"  class="LoaderImage">
+            <p class="loaderText">{{pageLoaderText}}</p>
+        </div>
+    </div>
+</div>
